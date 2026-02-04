@@ -54,7 +54,11 @@ type Position = { x: number; y: number };
 
 SplashScreen.preventAutoHideAsync();
 
-export const Home = () => {
+type HomeProps = {
+  onNavigateActivities?: () => void;
+};
+
+export const Home = ({ onNavigateActivities }: HomeProps) => {
   const loaded = useNowPlayingLoaded();
   const themeLoaded = useRef(false);
 
@@ -63,6 +67,7 @@ export const Home = () => {
 
   const color0 = theme.color6?.get();
   const color2 = theme.color2?.get();
+  const color4 = theme.color4?.get();
 
   const viewExtraRef = useRef<BottomSheet>();
   const musicLogsRef = useRef<BottomSheet>();
@@ -224,7 +229,24 @@ export const Home = () => {
           <FadeAway direction="up" animated={animated}>
             <XStack jc="space-between" ai="center" mb="$4" w={imageSize}>
               <Album />
-              <NowLive />
+              <XStack gap="$2" ai="center">
+                <NowLive />
+                {onNavigateActivities ? (
+                  <Button
+                    size="$3"
+                    br="$6"
+                    bc={color2}
+                    color={color4}
+                    pressStyle={{
+                      backgroundColor: color0,
+                      borderColor: color0,
+                    }}
+                    onPress={onNavigateActivities}
+                  >
+                    Activities
+                  </Button>
+                ) : null}
+              </XStack>
             </XStack>
           </FadeAway>
 
