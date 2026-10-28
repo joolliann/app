@@ -66,7 +66,10 @@ const links = [
   },
 ];
 
-export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
+export const ViewExtra = forwardRef<
+  BottomSheetModal,
+  { onOpenSchedule?: () => void }
+>(({ onOpenSchedule }, ref) => {
   const sleepTimerSheetRef = useRef<BottomSheetModal>(null);
 
   const [isDarkMode, setIsDarkMode] = useAtom(themeAtom);
@@ -200,14 +203,24 @@ export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
                 rippleColor={rippleColor}
                 underlayColor={color4}
                 activeOpacity={0.1}
-                onPress={() => Linking.openURL(url)}
+                onPress={() =>
+                  name === "Air Schedule" && onOpenSchedule
+                    ? onOpenSchedule()
+                    : Linking.openURL(url)
+                }
               >
                 <ListItem
                   color={color3}
                   transparent
                   scaleIcon={1.125}
                   icon={icon}
-                  iconAfter={<ExternalLink color={color4} />}
+                  iconAfter={
+                    name === "Air Schedule" && onOpenSchedule ? (
+                      <ChevronRight color={color4} />
+                    ) : (
+                      <ExternalLink color={color4} />
+                    )
+                  }
                 >
                   {name}
                 </ListItem>

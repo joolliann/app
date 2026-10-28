@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020", "DOM"],
+    "types": [],
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": ".."
+  },
+  "include": [
+    "../src/common/schedule/model.ts",
+    "../src/common/schedule/repository.ts"
+  ]
+}
