@@ -10,6 +10,7 @@ import { Album, Controller, NowLive, NowPlaying, Share } from "elements";
 import { ProgressBar } from "elements/player/Progress";
 import { MusicLogs } from "elements/sheets/MusicLogs";
 import { ViewExtra } from "elements/sheets/ViewExtras";
+import { Schedule } from "./Schedule";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useAtomValue } from "jotai";
@@ -55,6 +56,7 @@ type Position = { x: number; y: number };
 SplashScreen.preventAutoHideAsync();
 
 export const Home = () => {
+  const [scheduleOpen, setScheduleOpen] = useState(false);
   const loaded = useNowPlayingLoaded();
   const themeLoaded = useRef(false);
 
@@ -224,7 +226,17 @@ export const Home = () => {
           <FadeAway direction="up" animated={animated}>
             <XStack jc="space-between" ai="center" mb="$4" w={imageSize}>
               <Album />
-              <NowLive />
+              <XStack ai="center" gap="$2">
+                <NowLive />
+                <Button
+                  size="$3"
+                  minHeight={44}
+                  accessibilityLabel="Open DJ schedule"
+                  onPress={() => setScheduleOpen(true)}
+                >
+                  Schedule
+                </Button>
+              </XStack>
             </XStack>
           </FadeAway>
 
@@ -261,11 +273,15 @@ export const Home = () => {
             animation={animated}
           />
 
-          <ViewExtra ref={viewExtraRef} />
+          <ViewExtra
+            ref={viewExtraRef}
+            onOpenSchedule={() => setScheduleOpen(true)}
+          />
 
           <LyricsSheet ref={lyricsSheetRef} />
         </Stack>
       </SafeAreaView>
+      {scheduleOpen && <Schedule onClose={() => setScheduleOpen(false)} />}
     </LinearGradient>
   );
 };

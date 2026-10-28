@@ -1,4 +1,6 @@
 node_modules/
+.env.local
+.env.*.local
 constants/secrets.ts
 .yarn/cache
 google-services.json
