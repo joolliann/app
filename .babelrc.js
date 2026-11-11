@@ -7,7 +7,7 @@ module.exports = (api) => {
     presets: [["babel-preset-expo", { jsxRuntime: "automatic" }]],
     plugins: [
       "transform-inline-environment-variables",
-      "react-native-reanimated/plugin",
+      "react-native-worklets/plugin",
     ],
   };
 };
