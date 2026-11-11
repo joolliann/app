@@ -33,6 +33,8 @@ export default (): ExpoConfig => ({
   },
   plugins: [
     "expo-font",
+    "expo-splash-screen",
+    "expo-status-bar",
     "./plugins/transparentSplashScreen.js",
     "./plugins/transparentNavigation.js",
     [
