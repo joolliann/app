@@ -23,7 +23,7 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import { Platform, useWindowDimensions, type View } from "react-native";
+import { Platform, Text, View, useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
@@ -41,12 +41,10 @@ import {
 } from "react-native-safe-area-context";
 import {
   Button,
-  Paragraph,
   Stack,
   XStack,
   getTokens,
   updateTheme,
-  useForceUpdate,
   useTheme,
 } from "tamagui";
 
@@ -56,7 +54,6 @@ SplashScreen.preventAutoHideAsync();
 
 export const Home = () => {
   const loaded = useNowPlayingLoaded();
-  const themeLoaded = useRef(false);
 
   const theme = useTheme();
   const token = getTokens();
@@ -78,19 +75,12 @@ export const Home = () => {
 
   const darkMode = useAtomValue(themeAtom);
 
-  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     if (loaded) {
       const color = dominantColor ?? Constants.DefaultColor;
       const theme = composePalette(color, darkMode);
-
       updateTheme({ name: "light", theme });
-      forceUpdate();
-
-      if (!themeLoaded.current) {
-        themeLoaded.current = true;
-      }
     }
   }, [loaded, timestamp, darkMode]);
 
@@ -193,7 +183,7 @@ export const Home = () => {
     }
   }, [loaded]);
 
-  if (!loaded || !themeLoaded.current) return null;
+  if (!loaded) return null;
 
   return (
     <LinearGradient
@@ -201,7 +191,7 @@ export const Home = () => {
       colors={[color2, color0]}
       onLayout={onLayoutRootView}
     >
-      <StatusBar translucent style={darkMode ? "light" : "dark"} />
+      <StatusBar style={darkMode ? "light" : "dark"} />
       <SafeAreaView
         ref={stackRef}
         style={{ flex: 1 }}
@@ -271,6 +261,10 @@ export const Home = () => {
 };
 
 const LyricsSheet = forwardRef((_, ref: any) => {
+  const theme = useTheme();
+  const color0 = theme.color0.get();
+  const color4 = theme.color4.get();
+
   return (
     <BottomSheet
       ref={ref}
@@ -280,20 +274,14 @@ const LyricsSheet = forwardRef((_, ref: any) => {
       enableDynamicSizing={false}
       handleComponent={() => null}
     >
-      <Lyrics />
+      <Lyrics color0={color0} color4={color4} />
     </BottomSheet>
   );
 });
 
-const Lyrics = () => {
-  const theme = useTheme();
-  const color0 = theme.color0.get();
-  const color1 = theme.color1.get();
-  const color2 = theme.color2.get();
-  const color4 = theme.color4.get();
-  const color5 = theme.color5.get();
-  const color6 = theme.color6.get();
+type LyricsProps = { color0: string; color4: string };
 
+const Lyrics = ({ color0, color4 }: LyricsProps) => {
   const { artist, track } = useNowPlaying();
 
   const lyrics = `
@@ -321,27 +309,15 @@ const Lyrics = () => {
   `;
 
   return (
-    <Stack
-      f={1}
-      p="$4"
-      bg={color0}
-      borderTopLeftRadius={0}
-      borderTopRightRadius={0}
-    >
-      <XStack gap="$2" ai="center">
-        <Paragraph color={color4} size="$2">
-          {track}
-        </Paragraph>
-        <Paragraph color={color4} size="$2">
-          {artist}
-        </Paragraph>
-      </XStack>
+    <View style={{ flex: 1, padding: 16, backgroundColor: color0, borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+      <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
+        <Text style={{ color: color4, fontSize: 12 }}>{track}</Text>
+        <Text style={{ color: color4, fontSize: 12 }}>{artist}</Text>
+      </View>
       <ScrollView>
-        <Paragraph color={color4} size="$2">
-          {lyrics}
-        </Paragraph>
+        <Text style={{ color: color4, fontSize: 12 }}>{lyrics}</Text>
       </ScrollView>
-    </Stack>
+    </View>
   );
 };
 

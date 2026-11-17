@@ -337,13 +337,13 @@ export const MusicLogs = forwardRef<BottomSheet, MusicLogsProps>(
         topInset={insets.top}
         snapPoints={snapPoints}
         animatedIndex={animation}
-        handleComponent={SheetHandle}
+        handleComponent={useCallback((props) => <SheetHandle {...props} color={color3} />, [color3])}
         backdropComponent={renderBackdrop}
         backgroundStyle={{
           backgroundColor: color1,
         }}
         enableDynamicSizing={false}
-        backgroundComponent={SheetBackground}
+        backgroundComponent={useCallback((props) => <SheetBackground {...props} color0={color0} color1={color1} />, [color0, color1])}
         onChange={(index) => {
           if (index === 0) {
             setBottomSheetOpen(false);

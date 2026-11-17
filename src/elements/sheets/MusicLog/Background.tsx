@@ -4,19 +4,11 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { Stack, useTheme } from "tamagui";
+import { View } from "react-native";
 
-const AnimatedStack = Animated.createAnimatedComponent(Stack);
+type Props = BottomSheetBackgroundProps & { color0: string; color1: string };
 
-type Props = BottomSheetBackgroundProps;
-
-export const SheetBackground = ({ style, animatedIndex }: Props) => {
-  // * region: theme
-  const theme = useTheme();
-
-  const color0 = theme.color0.get();
-  const color1 = theme.color1.get();
-
+export const SheetBackground = ({ style, animatedIndex, color0, color1 }: Props) => {
   // * region: styles
   const backgroundAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -29,9 +21,9 @@ export const SheetBackground = ({ style, animatedIndex }: Props) => {
   });
 
   const backgroundStyle = useMemo(() => {
-    return [style, backgroundAnimatedStyle];
+    return [style, backgroundAnimatedStyle, { borderTopLeftRadius: 28, borderTopRightRadius: 28 }];
   }, [backgroundAnimatedStyle]);
 
   // * region: render
-  return <AnimatedStack f={1} btlr="$7" btrr="$7" style={backgroundStyle} />;
+  return <Animated.View style={backgroundStyle} />;
 };

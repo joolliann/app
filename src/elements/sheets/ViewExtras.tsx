@@ -141,6 +141,11 @@ export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
 
   const rippleColor = color3.replace("hsl", "hsla").replace(")", `, ${0.75})`);
 
+  const renderHandle = useCallback(
+    (props) => <SheetHandle {...props} color={color3} />,
+    [color3],
+  );
+
   return (
     <BottomSheetModalProvider>
       <BottomSheetModal
@@ -152,7 +157,7 @@ export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
         }}
         backdropComponent={renderBackdrop}
         animatedIndex={animationValue}
-        handleComponent={SheetHandle}
+        handleComponent={renderHandle}
       >
         <BottomSheetView style={{ flex: 1, paddingBottom: insets.bottom }}>
           {songComponent}
@@ -229,7 +234,7 @@ export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
         }}
         backdropComponent={renderBackdrop}
         animatedIndex={animationValue}
-        handleComponent={SheetHandle}
+        handleComponent={renderHandle}
       >
         <BottomSheetView style={{ flex: 1, paddingBottom: insets.bottom }}>
           <YStack gap="$1.5">
@@ -308,9 +313,7 @@ export const ViewExtra = forwardRef<BottomSheetModal>((_, ref) => {
   );
 });
 
-const SheetHandle: FC<BottomSheetHandleProps> = ({ animatedIndex }) => {
-  const theme = useTheme();
-
+const SheetHandle: FC<BottomSheetHandleProps & { color: string }> = ({ animatedIndex, color }) => {
   const handleAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(
@@ -337,7 +340,7 @@ const SheetHandle: FC<BottomSheetHandleProps> = ({ animatedIndex }) => {
       style={[
         {
           position: "absolute",
-          backgroundColor: theme.color3.val,
+          backgroundColor: color,
           height: 4,
           width: 45,
           borderRadius: 3,

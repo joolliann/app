@@ -1,4 +1,4 @@
-import { useTheme } from "@tamagui/core";
+import { useTheme, XStack } from "tamagui";
 import React, { useCallback, useEffect, useRef } from "react";
 import Animated, {
   Easing,
@@ -6,7 +6,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { XStack } from "tamagui";
 
 const NUM_BARS = 3;
 const MIN_HEIGHT = 15;

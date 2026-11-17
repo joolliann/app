@@ -5,16 +5,13 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { Square, useTheme } from "tamagui";
+import { Square } from "tamagui";
 
 const AnimatedSquare = Animated.createAnimatedComponent(Square);
 
-export const SheetHandle = ({ animatedIndex }: BottomSheetHandleProps) => {
-  // * region: theme
-  const theme = useTheme();
+type Props = BottomSheetHandleProps & { color: string };
 
-  const color3 = theme.color3.get();
-
+export const SheetHandle = ({ animatedIndex, color }: Props) => {
   // * region: styles
   const handleAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
@@ -42,7 +39,7 @@ export const SheetHandle = ({ animatedIndex }: BottomSheetHandleProps) => {
   // * region: render
   return (
     <AnimatedSquare
-      bc={color3}
+      bc={color}
       pos="absolute"
       als="center"
       h="$0.5"

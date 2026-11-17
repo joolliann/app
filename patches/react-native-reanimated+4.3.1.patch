@@ -1,0 +1,32 @@
+diff --git a/node_modules/react-native-reanimated/lib/module/mutables.js b/node_modules/react-native-reanimated/lib/module/mutables.js
+index 8fe0634..81f5f1f 100644
+--- a/node_modules/react-native-reanimated/lib/module/mutables.js
++++ b/node_modules/react-native-reanimated/lib/module/mutables.js
+@@ -241,9 +241,11 @@ function makeMutableWeb(initial) {
+       valueSetter(mutable, modifier !== undefined ? modifier(mutable.value) : mutable.value, forceUpdate);
+     },
+     addListener: (id, listener) => {
++      'worklet';
+       listeners.set(id, listener);
+     },
+     removeListener: id => {
++      'worklet';
+       listeners.delete(id);
+     },
+     _isReanimatedSharedValue: true
+diff --git a/node_modules/react-native-reanimated/src/mutables.ts b/node_modules/react-native-reanimated/src/mutables.ts
+index 49132fd..fe20e71 100644
+--- a/node_modules/react-native-reanimated/src/mutables.ts
++++ b/node_modules/react-native-reanimated/src/mutables.ts
+@@ -319,9 +319,11 @@ function makeMutableWeb<TValue>(initial: TValue): Mutable<TValue> {
+       );
+     },
+     addListener: (id: number, listener: Listener<TValue>) => {
++      'worklet';
+       listeners.set(id, listener);
+     },
+     removeListener: (id: number) => {
++      'worklet';
+       listeners.delete(id);
+     },
+ 

@@ -3,6 +3,10 @@ import { createInterFont } from "@tamagui/font-inter";
 import { shorthands } from "@tamagui/shorthands";
 import { themes, tokens } from "@tamagui/themes";
 import { createTamagui } from "tamagui";
+import { composePalette } from "./common/colors";
+
+// Default palette used until the album art color is resolved
+const defaultPalette = composePalette({ h: 0, s: 0, l: 0 }, false);
 
 const config = createTamagui({
   animations: createAnimations({
@@ -41,7 +45,13 @@ const config = createTamagui({
       },
     ),
   },
-  themes,
+  themes: {
+    ...themes,
+    light: {
+      ...themes.light,
+      ...defaultPalette,
+    },
+  },
   tokens,
 });
 

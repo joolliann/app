@@ -1,0 +1,196 @@
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheet/BottomSheet.js b/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheet/BottomSheet.js
+index a7748c0..6fa090c 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheet/BottomSheet.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheet/BottomSheet.js
+@@ -1222,7 +1222,7 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+   /**
+    * sets provided animated position
+    */
+-  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedPosition.value, _animatedPosition => {
++  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedPosition.get(), _animatedPosition => {
+     if (_providedAnimatedPosition) {
+       _providedAnimatedPosition.value = _animatedPosition + topInset;
+     }
+@@ -1231,7 +1231,7 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+   /**
+    * sets provided animated index
+    */
+-  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedIndex.value, _animatedIndex => {
++  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedIndex.get(), _animatedIndex => {
+     if (_providedAnimatedIndex) {
+       _providedAnimatedIndex.value = _animatedIndex;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+index f779d6d..88f800f 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+@@ -80,7 +80,7 @@ const BottomSheetBackdropComponent = ({
+   //#endregion
+ 
+   //#region effects
+-  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedIndex.value <= disappearsOnIndex, (shouldDisableTouchability, previous) => {
++  (0, _reactNativeReanimated.useAnimatedReaction)(() => animatedIndex.get() <= disappearsOnIndex, (shouldDisableTouchability, previous) => {
+     if (shouldDisableTouchability === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedKeyboard.js b/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedKeyboard.js
+index b15a074..bc36d07 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedKeyboard.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedKeyboard.js
+@@ -105,7 +105,7 @@ const useAnimatedKeyboard = () => {
+    *
+    * @link https://github.com/gorhom/react-native-bottom-sheet/issues/411
+    */
+-  (0, _reactNativeReanimated.useAnimatedReaction)(() => state.value.target, (result, previous) => {
++  (0, _reactNativeReanimated.useAnimatedReaction)(() => state.get().target, (result, previous) => {
+     if (!result || result === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedLayout.js b/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedLayout.js
+index 973d05c..1751320 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedLayout.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/commonjs/hooks/useAnimatedLayout.js
+@@ -57,7 +57,7 @@ function useAnimatedLayout(containerLayoutState, topInset, bottomInset, modal, s
+   //#endregion
+ 
+   //#region effects
+-  (0, _reactNativeReanimated.useAnimatedReaction)(() => state.value.rawContainerHeight, (result, previous) => {
++  (0, _reactNativeReanimated.useAnimatedReaction)(() => state.get().rawContainerHeight, (result, previous) => {
+     if (result === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheet/BottomSheet.js b/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheet/BottomSheet.js
+index ca4bb3b..99f0248 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheet/BottomSheet.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheet/BottomSheet.js
+@@ -1215,7 +1215,7 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+   /**
+    * sets provided animated position
+    */
+-  useAnimatedReaction(() => animatedPosition.value, _animatedPosition => {
++  useAnimatedReaction(() => animatedPosition.get(), _animatedPosition => {
+     if (_providedAnimatedPosition) {
+       _providedAnimatedPosition.value = _animatedPosition + topInset;
+     }
+@@ -1224,7 +1224,7 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+   /**
+    * sets provided animated index
+    */
+-  useAnimatedReaction(() => animatedIndex.value, _animatedIndex => {
++  useAnimatedReaction(() => animatedIndex.get(), _animatedIndex => {
+     if (_providedAnimatedIndex) {
+       _providedAnimatedIndex.value = _animatedIndex;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+index aac25f6..9763b90 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
+@@ -75,7 +75,7 @@ const BottomSheetBackdropComponent = ({
+   //#endregion
+ 
+   //#region effects
+-  useAnimatedReaction(() => animatedIndex.value <= disappearsOnIndex, (shouldDisableTouchability, previous) => {
++  useAnimatedReaction(() => animatedIndex.get() <= disappearsOnIndex, (shouldDisableTouchability, previous) => {
+     if (shouldDisableTouchability === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedKeyboard.js b/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedKeyboard.js
+index 8004523..8c74a96 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedKeyboard.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedKeyboard.js
+@@ -101,7 +101,7 @@ export const useAnimatedKeyboard = () => {
+    *
+    * @link https://github.com/gorhom/react-native-bottom-sheet/issues/411
+    */
+-  useAnimatedReaction(() => state.value.target, (result, previous) => {
++  useAnimatedReaction(() => state.get().target, (result, previous) => {
+     if (!result || result === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedLayout.js b/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedLayout.js
+index b0eec93..55030e0 100644
+--- a/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedLayout.js
++++ b/node_modules/@gorhom/bottom-sheet/lib/module/hooks/useAnimatedLayout.js
+@@ -53,7 +53,7 @@ export function useAnimatedLayout(containerLayoutState, topInset, bottomInset, m
+   //#endregion
+ 
+   //#region effects
+-  useAnimatedReaction(() => state.value.rawContainerHeight, (result, previous) => {
++  useAnimatedReaction(() => state.get().rawContainerHeight, (result, previous) => {
+     if (result === previous) {
+       return;
+     }
+diff --git a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
+index fc52033..329114b 100644
+--- a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
++++ b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx
+@@ -1753,7 +1753,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+      * sets provided animated position
+      */
+     useAnimatedReaction(
+-      () => animatedPosition.value,
++      () => animatedPosition.get(),
+       _animatedPosition => {
+         if (_providedAnimatedPosition) {
+           _providedAnimatedPosition.value = _animatedPosition + topInset;
+@@ -1766,7 +1766,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+      * sets provided animated index
+      */
+     useAnimatedReaction(
+-      () => animatedIndex.value,
++      () => animatedIndex.get(),
+       _animatedIndex => {
+         if (_providedAnimatedIndex) {
+           _providedAnimatedIndex.value = _animatedIndex;
+diff --git a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
+index a0345b0..1eba70b 100644
+--- a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
++++ b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
+@@ -120,7 +120,7 @@ const BottomSheetBackdropComponent = ({
+ 
+   //#region effects
+   useAnimatedReaction(
+-    () => animatedIndex.value <= disappearsOnIndex,
++    () => animatedIndex.get() <= disappearsOnIndex,
+     (shouldDisableTouchability, previous) => {
+       if (shouldDisableTouchability === previous) {
+         return;
+diff --git a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetDebugView/ReText.webx.tsx b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetDebugView/ReText.webx.tsx
+index db9b483..0a6e246 100644
+--- a/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetDebugView/ReText.webx.tsx
++++ b/node_modules/@gorhom/bottom-sheet/src/components/bottomSheetDebugView/ReText.webx.tsx
+@@ -32,7 +32,7 @@ const ReText = (props: TextProps) => {
+ 
+   //region effects
+   useAnimatedReaction(
+-    () => providedValue.value,
++    () => providedValue.get(),
+     result => {
+       textRef.current?.setNativeProps({
+         text: result,
+diff --git a/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedKeyboard.ts b/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedKeyboard.ts
+index d7051bf..58737a3 100644
+--- a/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedKeyboard.ts
++++ b/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedKeyboard.ts
+@@ -150,7 +150,7 @@ export const useAnimatedKeyboard = () => {
+    * @link https://github.com/gorhom/react-native-bottom-sheet/issues/411
+    */
+   useAnimatedReaction(
+-    () => state.value.target,
++    () => state.get().target,
+     (result, previous) => {
+       if (!result || result === previous) {
+         return;
+diff --git a/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedLayout.ts b/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedLayout.ts
+index 68c674d..7ff9668 100644
+--- a/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedLayout.ts
++++ b/node_modules/@gorhom/bottom-sheet/src/hooks/useAnimatedLayout.ts
+@@ -70,7 +70,7 @@ export function useAnimatedLayout(
+ 
+   //#region effects
+   useAnimatedReaction(
+-    () => state.value.rawContainerHeight,
++    () => state.get().rawContainerHeight,
+     (result, previous) => {
+       if (result === previous) {
+         return;

@@ -67,13 +67,21 @@ export type RawNowPlaying = {
 const nowPlayingStatusEffect = atomEffect((get, set) => {
   const ws = new WebSocket(websocketURL);
 
+  // Ensure the app never hangs on a white screen if the WebSocket is slow
+  const loadedTimeout = setTimeout(() => {
+    set(nowPlayingLoaded, true);
+  }, 5000);
+
   ws.onopen = async () => {
     console.log("onopen");
   };
 
   ws.onmessage = async (event) => {
+    clearTimeout(loadedTimeout);
     if (!get(streamIsLiveAtom)) {
-      return set(nowPlayingAtom, Constants.StreamOfflineStatus);
+      set(nowPlayingAtom, Constants.StreamOfflineStatus);
+      set(nowPlayingLoaded, true);
+      return;
     }
 
     const data = JSON.parse(event.data);
@@ -81,10 +89,12 @@ const nowPlayingStatusEffect = atomEffect((get, set) => {
     console.log({ data });
 
     if (data.type === "LINK") {
-      return set(nowPlayingAtom, {
+      set(nowPlayingAtom, {
         ...data,
         ...Constants.DefaultSongStatus,
       });
+      set(nowPlayingLoaded, true);
+      return;
     }
 
     const track = await transformStatus(data, true);
@@ -105,11 +115,15 @@ const nowPlayingStatusEffect = atomEffect((get, set) => {
   };
 
   ws.onclose = () => {
+    clearTimeout(loadedTimeout);
     set(nowPlayingLoaded, true);
     console.log("onclose");
   };
 
-  return () => ws.close();
+  return () => {
+    clearTimeout(loadedTimeout);
+    ws.close();
+  };
 });
 
 export const useNowPlayingLoaded = () => useAtomValue(nowPlayingLoaded);

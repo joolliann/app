@@ -80,9 +80,12 @@ export const hslToStr = ({ h, s, l }: HSLColorObject): HSLColorString => {
 export const hexToHsl = (hex: HEXColorString): HSLColorObject => {
   if (!hex) throw new Error("Invalid HEX color");
 
-  let [r, g, b] = hex?.match(/\w\w/g).map((str) => {
-    return parseInt(str, 16);
-  });
+  // react-native-image-colors returns a hex string like "#rrggbb", but guard
+  // against short/invalid forms so a null match never throws here.
+  const matches = hex.match(/\w\w/g);
+  if (!matches || matches.length < 3) throw new Error("Invalid HEX color");
+
+  let [r, g, b] = matches.map((str) => parseInt(str, 16));
 
   r /= 255;
   g /= 255;
@@ -91,14 +94,11 @@ export const hexToHsl = (hex: HEXColorString): HSLColorObject => {
   const min = Math.min(r, g, b);
   const max = Math.max(r, g, b);
 
-  let h: number;
-  let s: number;
+  let h = 0;
+  let s = 0;
   const l: number = (max + min) / 2;
 
-  if (max === min) {
-    h = 0;
-    s = 0;
-  } else {
+  if (max !== min) {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
@@ -119,9 +119,10 @@ export const hexToHsl = (hex: HEXColorString): HSLColorObject => {
 };
 
 export const hslToHex = (hsl: HSLColorString): HEXColorString => {
-  let [h, s, l] = hsl.match(/\d+(\.\d+)?/g).map((str) => {
-    return parseFloat(str);
-  });
+  const matches = hsl.match(/\d+(\.\d+)?/g);
+  if (!matches || matches.length < 3) return "#000000";
+
+  let [h, s, l] = matches.map((str) => parseFloat(str));
 
   l /= 100;
 
