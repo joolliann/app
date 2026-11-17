@@ -7644,10 +7644,10 @@ react-native-svg@15.15.4:
     css-tree "^1.1.3"
     warn-once "0.1.1"
 
-react-native-text-ticker@^1.14.0:
-  version "1.14.0"
-  resolved "https://registry.npmjs.org/react-native-text-ticker/-/react-native-text-ticker-1.14.0.tgz"
-  integrity sha512-8TNGTcW43dfnCqIuXVA7F1Ny8SKGrw0pIrNS5nM7eda+6AsuPTZh3JQ2CwmSRYfsrlnS4QFrpyo5ykpI8nvtCw==
+react-native-text-ticker@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-text-ticker/-/react-native-text-ticker-1.16.0.tgz#64971b7a5ca4b32d94a70d69d05de7fb2a306cf5"
+  integrity sha512-UHZcIrXzNQ3CnGSA6d5foR9weqSCEk5w+eJGnUf5OQkKbuq/xtt1ZaNVnsgcG5+3f9EnRrNCt52/a46LXVKGGw==
 
 react-native-track-player@^4.1.1:
   version "4.1.1"
